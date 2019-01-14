@@ -51,6 +51,9 @@ public class KeyUtils {
         else if (keyCode == 29) return "13-17";
         else if (keyCode == 47) return "17-21";
         else if (keyCode == 32) return "21+";
+        else if (keyCode == 54) return "push";
+        else if (keyCode ==52) return "call";
+        else if (keyCode ==31) return "agro";
         return "null";
     }
 
@@ -63,5 +66,7 @@ public class KeyUtils {
         return (code >= 8 && code <= 13) || code == 61;
     }
 
-
+    public static boolean isInNashGroup(int code) {
+        return code == 54 || code == 52 || code == 31;
+    }
 }

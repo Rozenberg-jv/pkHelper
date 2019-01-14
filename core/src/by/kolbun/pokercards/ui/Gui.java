@@ -20,6 +20,7 @@ public class Gui extends Table {
     private Image currentImage;
     private ButtonGroup<TextButton> topBGroup;
     private ButtonGroup<TextButton> botBGroup;
+    private ButtonGroup<TextButton> nashBGroup;
     private int lastKeyCode = 8;
     private Map<Integer, Integer> keyCodeGroupTabCapacity = new HashMap<Integer, Integer>();
 
@@ -46,6 +47,7 @@ public class Gui extends Table {
                 font
         );
 
+        Label labelNash = new Label("NASH", labelStyle);
         Label label1 = new Label("HU SB", labelStyle);
         Label label2 = new Label("HU BB", labelStyle);
         Label label3 = new Label("3MAX BU", labelStyle);
@@ -91,15 +93,27 @@ public class Gui extends Table {
         TextButton tb6_5 = new TextButton("17-21", tbStyle);
         TextButton tb6_6 = new TextButton("21+", tbStyle);
 
+        // nash group
+        TextButton nashB_push = new TextButton("push", tbStyle);
+        TextButton nashB_call = new TextButton("call", tbStyle);
+        TextButton nashB_agro = new TextButton("agro", tbStyle);
+
         //
         Table btnTable = new Table();
-        btnTable.defaults().space(5);
+        btnTable.defaults().space(3);
 
         btnTable.row();
+        btnTable.add(labelNash);
+        btnTable.row();
+        btnTable.add(nashB_push);
+        btnTable.add(nashB_call);
+        btnTable.add(nashB_agro);
+
+        btnTable.row().padTop(10);
         btnTable.add(label1);
         btnTable.add(tb1_1).colspan(2).fillX();
 
-        btnTable.row().padTop(15);
+        btnTable.row().padTop(10);
         btnTable.add(label2);
         btnTable.row();
         btnTable.add(tb2_1);
@@ -108,11 +122,11 @@ public class Gui extends Table {
         btnTable.row();
         btnTable.add(tb2_4);
 
-        btnTable.row().padTop(15);
+        btnTable.row().padTop(10);
         btnTable.add(label3);
         btnTable.add(tb3_1).colspan(2).fillX();
 
-        btnTable.row().padTop(15);
+        btnTable.row().padTop(10);
         btnTable.add(label4);
         btnTable.row();
         btnTable.add(tb4_1);
@@ -123,7 +137,7 @@ public class Gui extends Table {
         btnTable.add();
         btnTable.add(tb4_5);
 
-        btnTable.row().padTop(15);
+        btnTable.row().padTop(10);
         btnTable.add(label5);
         btnTable.row();
         btnTable.add(tb5_01);
@@ -137,14 +151,14 @@ public class Gui extends Table {
         btnTable.add(tb5_07);
         btnTable.add(tb5_08);
         btnTable.add(tb5_09);
-        btnTable.row().padTop(10);
+        btnTable.row().padTop(5);
         btnTable.add(tb5_10);
         btnTable.add(tb5_11);
         btnTable.add(tb5_12);
         btnTable.row();
         btnTable.add(tb5_13);
 
-        btnTable.row().padTop(15);
+        btnTable.row().padTop(10);
         btnTable.add(label6);
         btnTable.row();
         btnTable.add(tb6_1);
@@ -161,14 +175,17 @@ public class Gui extends Table {
                 tb1_1, tb2_1, tb2_2, tb2_3, tb2_4, tb3_1, tb4_1, tb4_2, tb4_3, tb4_4, tb4_5,
                 tb5_01, tb5_02, tb5_03, tb5_04, tb5_05, tb5_06, tb5_07, tb5_08, tb5_09, tb5_10, tb5_11, tb5_12, tb5_13);
         botBGroup = new ButtonGroup<TextButton>(tb6_1, tb6_2, tb6_3, tb6_4, tb6_5, tb6_6);
+        nashBGroup = new ButtonGroup<TextButton>(nashB_push, nashB_call, nashB_agro);
 
         topBGroup.setMinCheckCount(1);
         topBGroup.setMaxCheckCount(1);
         botBGroup.setMinCheckCount(0);
         botBGroup.setMaxCheckCount(1);
+        nashBGroup.setMinCheckCount(0);
+        nashBGroup.setMaxCheckCount(1);
 
         Table outer = new Table();
-        outer.defaults().space(10);
+        outer.defaults().space(7);
         outer.setBackground(new TextureRegionDrawable(
                 new TextureRegion(Assets.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight())));
 
@@ -183,6 +200,12 @@ public class Gui extends Table {
         this.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                int nashIndex = nashBGroup.getCheckedIndex();
+                if (nashIndex != -1) {
+                    currentImage.setDrawable(getImage(nashIndex));
+                    return;
+                }
+
                 int topIndex = topBGroup.getCheckedIndex();
                 int botIndex = botBGroup.getCheckedIndex();
                 if (topIndex >= 0 && botIndex >= 0) {
@@ -190,6 +213,10 @@ public class Gui extends Table {
                 }
             }
         });
+    }
+
+    private Drawable getImage(int nashIndex) {
+        return new TextureRegionDrawable(new TextureRegion(Assets.logicImgs.get(6).get(0).get(nashIndex)));
     }
 
     private Drawable getImage(int topIndex, int botIndex) {
@@ -223,6 +250,15 @@ public class Gui extends Table {
     public void keyPressed(int keyCode) {
 
         System.out.println("Pressed KeyCode: " + keyCode);
+
+        if (KeyUtils.isInNashGroup(keyCode)) {
+            botBGroup.uncheckAll();
+            topBGroup.uncheckAll();
+            nashBGroup.setChecked(KeyUtils.getString(keyCode));
+            return;
+        } else {
+            nashBGroup.uncheckAll();
+        }
 
         if (KeyUtils.isInBotGroup(keyCode)) {
             botBGroup.setChecked(KeyUtils.getString(keyCode));

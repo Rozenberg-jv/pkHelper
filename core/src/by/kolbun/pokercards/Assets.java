@@ -42,6 +42,7 @@ public class Assets {
         ArrayList<ArrayList<Texture>> group3 = new ArrayList<ArrayList<Texture>>();
         ArrayList<ArrayList<Texture>> group4 = new ArrayList<ArrayList<Texture>>();
         ArrayList<ArrayList<Texture>> group5 = new ArrayList<ArrayList<Texture>>();
+        ArrayList<ArrayList<Texture>> nash = new ArrayList<ArrayList<Texture>>();
 
         group1.add(new ArrayList<Texture>());
 
@@ -56,6 +57,8 @@ public class Assets {
         for (int i = 0; i < 13; i++)
             group5.add(new ArrayList<Texture>());
 
+        nash.add(new ArrayList<Texture>());
+
         for (int i = 1; i <= 6; i++)
             group1.get(0).add(new Texture(Gdx.files.internal(assetsPath + logicPath + "1/1/" + i + PNG)));
         for (int j = 1; j <= 4; j++)
@@ -69,12 +72,16 @@ public class Assets {
         for (int j = 1; j <= 13; j++)
             for (int i = 1; i <= 6; i++)
                 group5.get(j - 1).add(new Texture(Gdx.files.internal(assetsPath + logicPath + "5/" + j + "/" + i + PNG)));
+        nash.get(0).add(new Texture(Gdx.files.internal(assetsPath + logicPath + "nash/" + "push.PNG")));
+        nash.get(0).add(new Texture(Gdx.files.internal(assetsPath + logicPath + "nash/" + "call.PNG")));
+        nash.get(0).add(new Texture(Gdx.files.internal(assetsPath + logicPath + "nash/" + "agro.PNG")));
 
         logicImgs.put(1, group1);
         logicImgs.put(2, group2);
         logicImgs.put(3, group3);
         logicImgs.put(4, group4);
         logicImgs.put(5, group5);
+        logicImgs.put(6, nash);
     }
 
 
