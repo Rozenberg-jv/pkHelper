@@ -21,6 +21,7 @@ public class DesktopLauncher {
 
         config.title = "PokerUtilities";
 
-        new LwjglApplication(new PokerCards("android/assets/"), config);
+        new LwjglApplication(new PokerCards(""), config);
+//        new LwjglApplication(new PokerCards("android/assets/"), config);
     }
 }

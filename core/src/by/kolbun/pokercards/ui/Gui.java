@@ -23,6 +23,8 @@ public class Gui extends Table {
     private ButtonGroup<TextButton> nashBGroup;
     private int lastKeyCode = 8;
     private Map<Integer, Integer> keyCodeGroupTabCapacity = new HashMap<Integer, Integer>();
+    private final BitmapFont FONT = new BitmapFont();
+    private final Label.LabelStyle LABEL_STYLE = new Label.LabelStyle(FONT, Color.WHITE);
 
     public Gui() {
         this.setFillParent(true);
@@ -37,23 +39,20 @@ public class Gui extends Table {
 
         currentImage = new Image(Assets.helloImg);
 
-        BitmapFont font = new BitmapFont();
-
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         TextButton.TextButtonStyle tbStyle = new TextButton.TextButtonStyle(
                 new TextureRegionDrawable(new TextureRegion(Assets.btnUp)),
                 new TextureRegionDrawable(new TextureRegion(Assets.btnDown)),
                 new TextureRegionDrawable(new TextureRegion(Assets.btnDown)),
-                font
+                FONT
         );
 
-        Label labelNash = new Label("NASH", labelStyle);
-        Label label1 = new Label("HU SB", labelStyle);
-        Label label2 = new Label("HU BB", labelStyle);
-        Label label3 = new Label("3MAX BU", labelStyle);
-        Label label4 = new Label("3MAX SB", labelStyle);
-        Label label5 = new Label("3MAX BB", labelStyle);
-        Label label6 = new Label("EFFECTIVE STACK SIZE", labelStyle);
+        Label labelNash = new Label("NASH", LABEL_STYLE);
+        Label label1 = new Label("HU SB", LABEL_STYLE);
+        Label label2 = new Label("HU BB", LABEL_STYLE);
+        Label label3 = new Label("3MAX BU", LABEL_STYLE);
+        Label label4 = new Label("3MAX SB", LABEL_STYLE);
+        Label label5 = new Label("3MAX BB", LABEL_STYLE);
+        Label label6 = new Label("EFFECTIVE STACK SIZE", LABEL_STYLE);
 
         // group 1
         TextButton tb1_1 = new TextButton("ACTION", tbStyle);
